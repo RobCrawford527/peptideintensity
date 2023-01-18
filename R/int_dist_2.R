@@ -1,34 +1,34 @@
-int_dist <- function(input){
-  
-  # check that at least one non-zero peptide is present 
+int_dist_2 <- function(input){
+
+  # check that at least one non-zero peptide is present
   if (nrow(input) > 0){
-    
+
     # calculate intensity per residue for each peptide
     # determine protein length
     input[,"int_per_res"] <- input[,"value"] / (input[,"end"] - input[,"start"] + 1)
     length <- input[1, "length"]
-    
+
     # create output data frame with one row per residue
     dist <- data.frame(residue = 1:length,
                        distance = (1:length)/length,
                        intensity = 0,
                        cumulative = NA)
-    
+
     # add intensity for each peptide to distribution
     for (i in 1:nrow(input)){
-      
+
       # define start and end residues
       start_res <- input[i,"start"]
       end_res <- input[i,"end"]
-      
+
       # for all residues covered by peptide, add intensity per residue to distribution
       dist[start_res:end_res, "intensity"] <- dist[start_res:end_res, "intensity"] + input[i,"int_per_res"]
     }
-    
+
     # calculate cumulative intensity
     dist[,"cumulative"] <- cumsum(dist[,"intensity"]) / sum(dist[,"intensity"])
   }
-  
+
   # return intensity distribution
   dist
 }

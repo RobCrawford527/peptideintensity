@@ -1,6 +1,8 @@
 peptide_intensity_distribution <- function(data,
                                            names_col,
-                                           sam_col,
+                                           exp_col,
+                                           cond_col,
+                                           rep_col,
                                            seq_col,
                                            val_col,
                                            start_col,
@@ -10,22 +12,20 @@ peptide_intensity_distribution <- function(data,
 
   # change column names
   colnames(data)[colnames(data) == names_col] <- "name"
-  colnames(data)[colnames(data) == sam_col] <- "sample"
+  colnames(data)[colnames(data) == exp_col] <- "experiment"
+  colnames(data)[colnames(data) == cond_col] <- "condition"
+  colnames(data)[colnames(data) == rep_col] <- "replicate"
   colnames(data)[colnames(data) == seq_col] <- "sequence"
   colnames(data)[colnames(data) == val_col] <- "value"
   colnames(data)[colnames(data) == start_col] <- "start"
   colnames(data)[colnames(data) == end_col] <- "end"
   colnames(data)[colnames(data) == len_col] <- "length"
 
-  # unite name and sample columns
-  data <- tidyr::unite(data = data,
-                       col = "name_sample",
-                       name,
-                       sample,
-                       sep = sep)
-
   # keep only rows and columns of interest
-  data_1 <- dplyr::filter(.data = data[,c("name_sample",
+  data_1 <- dplyr::filter(.data = data[,c("name",
+                                          "experiment",
+                                          "condition",
+                                          "replicate",
                                           "sequence",
                                           "value",
                                           "start",
@@ -33,50 +33,21 @@ peptide_intensity_distribution <- function(data,
                                           "length")],
                           value != 0)
 
-  # separate into list, one item for each name/sample combination
+  # separate into list by protein name
   data_2 <- list()
-  for (i in unique(data_1[,"name_sample"])){
-    data_2[[i]] <- dplyr::filter(.data = data_1,
-                                 name_sample == i)
+  for (i in unique(data_1[,"name"])){
+    data_1_filtered <- dplyr::filter(.data = data_1,
+                                     name == i)
+    for (j in unique(data_1_filtered[,"experiment"])){
+      data_2[[i]][[j]] <- dplyr::filter(.data = data_1_filtered,
+                                        experiment == j)
+    }
   }
 
-  ### intensity distributions
   # calculate cumulative peptide intensity distributions
-  distribution <- lapply(data_2,
-                         function(X) int_dist(X))
-
-  ### metadata
-  # find protein length
-  # calculate numbers of non-zero peptides
-  # calculate coverage (proportion of residues detected)
-  length <- lapply(data_2,
-                   function(X) X[1, "length"])
-  nonzero <- lapply(data_2,
-                    function(X) nrow(X))
-  coverage <- lapply(distribution,
-                     function(X) sum(X[,"intensity"] != 0))
-
-  # create empty list for output
-  # write in metadata and distribution for each name/sample combination
-  output <- list()
-  for (i in unique(names(data_2))){
-    # split name and sample
-    name_sample <- strsplit(i, split = "/")[[1]]
-
-    # write output list
-    # contains metadata vector and distribution data frame
-    output[[i]] <- list(name = name_sample[1],
-                        condition = gsub("_[0-9]+$",
-                                         "",
-                                         name_sample[2]),
-                        replicate = substr(name_sample[2],
-                                           start = nchar(name_sample[2]),
-                                           stop = nchar(name_sample[2])),
-                        length = length[[i]],
-                        nonzero_peptides = nonzero[[i]],
-                        coverage = coverage[[i]] / length[[i]],
-                        distribution = distribution[[i]])
-  }
+  output <- lapply(data_2,
+                   function(X) lapply(X,
+                                      function(Y) int_dist_1(Y)))
 
   # return output list
   output
@@ -84,7 +55,9 @@ peptide_intensity_distribution <- function(data,
 
 example_dist <- peptide_intensity_distribution(data = example,
                                                names_col = "GENENAME",
-                                               sam_col = "Sample",
+                                               exp_col = "experiment",
+                                               cond_col = "condition",
+                                               rep_col = "replicate",
                                                seq_col = "Sequence",
                                                val_col = "intensity",
                                                start_col = "Start.position",
