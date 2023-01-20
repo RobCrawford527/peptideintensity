@@ -72,7 +72,7 @@ moment <- function(data,
                        moment = moment,
                        nonzero = nonzero)
   row.names(output) <- NULL
-  output <- tidyr::separate(data = moment,
+  output <- tidyr::separate(data = output,
                             col = name_experiment,
                             into = c("name", "experiment"),
                             sep = sep)
