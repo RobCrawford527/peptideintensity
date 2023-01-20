@@ -46,10 +46,10 @@ wasserstein_test <- function(data,
         # perform wasserstein test
         # write into data frame
         output <- rbind.data.frame(output,
-                                   peptideintensity:::wass_test_dist(reference = reference,
-                                                                     sample = sample,
-                                                                     nboots = nboots,
-                                                                     sep = sep))
+                                   wass_test_dist(reference = reference,
+                                                  sample = sample,
+                                                  nboots = nboots,
+                                                  sep = sep))
       }
     }
   }
@@ -65,9 +65,9 @@ wasserstein_test <- function(data,
 
     # perform BH procedure (or not, if correction = FALSE)
     # write output into list
-    corrected[[c]] <- peptideintensity:::bh_correction(input = output_c,
-                                                       correction = correction,
-                                                       alpha = alpha)
+    corrected[[c]] <- bh_correction(input = output_c,
+                                    correction = correction,
+                                    alpha = alpha)
   }
 
   # return output list

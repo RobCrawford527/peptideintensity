@@ -109,9 +109,9 @@ plot_intensity_distribution <- function(data,
 
   # plot midpoints if appropriate
   if (midpoint == TRUE){
-    plot <- peptideintensity:::plot_midpoint(input = input_df,
-                                             plot = plot,
-                                             shapes = shapes)
+    plot <- plot_midpoint(input = input_df,
+                          plot = plot,
+                          shapes = shapes)
   }
 
   # add scale for fill if appropriate

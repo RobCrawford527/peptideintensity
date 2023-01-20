@@ -75,7 +75,7 @@ peptide_intensity_distribution <- function(data,
   output <- lapply(data_2,
                    function(X) lapply(X,
                                       function(Y) lapply(Y,
-                                                         function(Z) peptideintensity:::int_dist_1(Z))))
+                                                         function(Z) int_dist_1(Z))))
 
   # return output list
   output

@@ -14,7 +14,7 @@ mean_int_dist_1 <- function(input){
   if (length(input) > 1){
 
     # calculate mean intensity distribution
-    distribution <- peptideintensity:::mean_int_dist_2(input)
+    distribution <- mean_int_dist_2(input)
 
     # write output list
     # find metadata and distribution

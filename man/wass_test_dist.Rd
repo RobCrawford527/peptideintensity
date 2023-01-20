@@ -17,6 +17,10 @@ intensity distribution to test.}
 
 \item{sep}{Separating character. Must not be present in experiment names.}
 }
+\value{
+A data frame containing the output of the Wasserstein test for the
+comparison of interest.
+}
 \description{
 Compare Peptide Intensity Distributions Using The Wasserstein Test
 }

@@ -7,7 +7,8 @@
 #' @param nboots The number of bootstrap iterations to perform.
 #' @param sep Separating character. Must not be present in experiment names.
 #'
-#' @return
+#' @return A data frame containing the output of the Wasserstein test for the
+#'     comparison of interest.
 #'
 #' @examples
 #'

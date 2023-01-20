@@ -14,7 +14,7 @@ int_dist_1 <- function(input){
   if (nrow(input) > 0){
 
     # calculate cumulative peptide intensity distribution
-    distribution <- peptideintensity:::int_dist_2(input)
+    distribution <- int_dist_2(input)
 
     # write output list
     # find metadata and distribution
