@@ -1,15 +1,28 @@
+#' Perform Multiple Testing Correction Using The BH Procedure
+#'
+#' @param input A data frame containing the output from the Wasserstein test
+#'     for a given comparison.
+#' @param correction Logical indicating whether or not to correct the
+#'     p-values (using the BH procedure).
+#' @param alpha The significance level to use.
+#'
+#' @return A corrected data frame containing the output from the Wasserstein
+#'     test.
+#'
+#' @examples
+#'
 bh_correction <- function(input,
                           correction,
                           alpha){
-  
+
   # order data frame
   # ... first by difference (largest to smallest)
   # ... then by p-value (smallest to largest)
   output <- input[order(input[,"difference"],
                         decreasing = TRUE),]
   output <- output[order(output[,"p_val"],
-                         decreasing = FALSE),]  
-  
+                         decreasing = FALSE),]
+
   # rank proteins
   # assign critical value depending on correction term
   # assign significance
@@ -22,8 +35,8 @@ bh_correction <- function(input,
   output[,"significant"] <- ifelse(output[,"p_val"] < output[,"critical_val"],
                                    TRUE,
                                    FALSE)
-  
-  # find lowest ranked significant protein 
+
+  # find lowest ranked significant protein
   # adjust so that all higher ranked proteins are significant, regardless of critical value
   if (sum(output[,"significant"]) > 0){
     max <- max(dplyr::filter(.data = output,
@@ -32,7 +45,7 @@ bh_correction <- function(input,
                                      TRUE,
                                      FALSE)
   }
-  
+
   # return output data frame
   output
 }

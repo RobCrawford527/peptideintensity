@@ -3,3 +3,4 @@
 export(mean_peptide_intensity_distribution)
 export(peptide_intensity_distribution)
 export(plot_intensity_distribution)
+export(wasserstein_test)

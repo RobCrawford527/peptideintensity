@@ -1,12 +1,12 @@
 #' Calculate Mean Peptide Intensity Distributions
 #'
-#' @param data The output from peptide_intensity_distribution. A multi-level
-#'     list (protein, condition, replicate) containing cumulative peptide
-#'     intensity distributions and their associated metadata.
+#' @param data A multi-level list (protein, condition, replicate) containing
+#'     cumulative peptide intensity distributions and their associated metadata.
+#'     For example, the output from peptide_intensity_distribution.
 #'
 #' @return A multi-level list in the same format as the input, containing mean
 #'     cumulative peptide intensity distributions for each protein and
-#'     condition.
+#'     condition along with metadata.
 #' @export
 #'
 #' @examples
