@@ -2,7 +2,7 @@
 % Please edit documentation in R/int_dist_1.R
 \name{int_dist_1}
 \alias{int_dist_1}
-\title{Add Metadata To A Peptide Intensity Distribution}
+\title{Add Metadata To A Cumulative Peptide Intensity Distribution}
 \usage{
 int_dist_1(input)
 }
@@ -11,9 +11,9 @@ int_dist_1(input)
 containing peptide-level data for one protein and one experiment.}
 }
 \value{
-A list containing cumulative peptide intensity distributions
-and associated metadata.
+A list containing a cumulative peptide intensity distribution
+and its associated metadata.
 }
 \description{
-Add Metadata To A Peptide Intensity Distribution
+Add Metadata To A Cumulative Peptide Intensity Distribution
 }

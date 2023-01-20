@@ -1,3 +1,13 @@
+#' Add Metadata To A Mean Peptide Intensity Distribution
+#'
+#' @param input A list containing cumulative peptide intensity distributions
+#'     for multiple replicates for one protein and condition.
+#'
+#' @return A list containing a mean cumulative peptide intensity distribution
+#'     and its associated metadata.
+#'
+#' @examples
+#'
 mean_int_dist_1 <- function(input){
 
   # check there is data for at least two reps
