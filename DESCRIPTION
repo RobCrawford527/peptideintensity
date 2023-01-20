@@ -1,12 +1,15 @@
 Package: peptideintensity
-Title: What the Package Does (One Line, Title Case)
+Title: Analyse The Distribution Of Peptide Intensity Across Protein Sequences
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Robert", "Crawford", , "rcrawford527@hotmail.co.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-9788-5137"))
+Description: Functions for investigating the distribution of peptide intensity
+  across protein sequences. Includes functions to calculate, plot and
+  statistically test cumulative peptide intensity distributions to assess
+  differences in distributions between samples, as well as to calculate
+  peptide "moments".
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
