@@ -1,3 +1,17 @@
+#' Plot The Midpoint Of A Cumulative Peptide Intensity Distribution
+#'
+#' @param input A data frame from plot_intensity_distribution, containing
+#'     cumulative peptide intensity distributions for the protein, condition(s)
+#'     and replicate(s) of interest.
+#' @param plot A ggplot2 object created by plot_intensity_distribution.
+#' @param shapes A vector of point shapes, defined in
+#'     plot_intensity_distribution.
+#'
+#' @return A ggplot2 object containing points plotted where 50% of the
+#'     cumulative intensity is reached for each distribution.
+#'
+#' @examples
+#'
 plot_midpoint <- function(input,
                           plot,
                           shapes){

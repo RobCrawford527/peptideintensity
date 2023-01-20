@@ -1,3 +1,22 @@
+#' Plot Cumulative Peptide Intensity Distributions
+#'
+#' @param data A multi-level list containing cumulative peptide intensity
+#'     distributions, either for individual replicates or means.
+#' @param protein A single protein name to plot.
+#' @param condition A vector of conditions to plot.
+#' @param midpoint Logical indicating whether or not to plot the midpoints of
+#'     the cumulative peptide intensity distributions.
+#' @param ribbon Logical indicating whether to plot a ribbon showing mean
+#'     plus/minus standard deviation. Only applicable if plotting mean
+#'     distributions.
+#'
+#' @return A plot of cumulative peptide intensity against position in protein
+#'     (from N terminus to C terminus) for the protein of interest. If
+#'     midpoint = TRUE, midpoints are printed to the console.
+#' @export
+#'
+#' @examples
+#'
 plot_intensity_distribution <- function(data,
                                         protein,
                                         condition,
