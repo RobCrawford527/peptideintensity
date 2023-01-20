@@ -1,3 +1,26 @@
+#' Generate Cumulative Peptide Intensity Distributions
+#'
+#' @param data A data frame containing peptide-level proteomics data.
+#' @param names_col Column containing protein names.
+#' @param exp_col Column containing experiment.
+#' @param cond_col Column containing condition.
+#' @param rep_col Column containing replicate.
+#' @param seq_col Column containing peptide sequence.
+#' @param val_col Column containing peptide intensity data.
+#' @param start_col Column containing start residue of peptide.
+#' @param end_col Column containing end residue of peptide.
+#' @param len_col Column containing protein length.
+#' @param sep Separating character. Must not be present in either protein names
+#'     or experiment.
+#'
+#' @return A multi-level list containing cumulative peptide intensity
+#'     distributions (cumulative proportion of intensity observed against
+#'     cumulative proportion of N-to-C distance). The list is separated
+#'     first by protein, then by condition, then by replicate.
+#' @export
+#'
+#' @examples
+#'
 peptide_intensity_distribution <- function(data,
                                            names_col,
                                            exp_col,
@@ -33,7 +56,7 @@ peptide_intensity_distribution <- function(data,
                                           "length")],
                           value != 0)
 
-  # separate into list by protein name
+  # separate into list by protein name, condition and replicate
   data_2 <- list()
   for (i in unique(data_1[,"name"])){
     data_1a <- dplyr::filter(.data = data_1,
