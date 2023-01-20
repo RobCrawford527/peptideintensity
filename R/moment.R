@@ -59,10 +59,10 @@ moment <- function(data,
   nonzero <- sapply(data_2,
                     function(X) nrow(X))
   sums <- lapply(data_2,
-                 function(X) colSums(X[,c("intensity", "weight")],
+                 function(X) colSums(X[,c("value", "weight")],
                                      na.rm = TRUE))
   moment <- sapply(sums,
-                   function(X) X["weight"] / X["intensity"])
+                   function(X) X["weight"] / X["value"])
 
   # write moments and number of peptides into data frame
   # separate names and experiments
