@@ -106,11 +106,3 @@ plot_intensity_distribution <- function(data,
   # return plot
   plot
 }
-
-plot_intensity_distribution(data = example_dist,
-                            protein = "RPS3",
-                            condition = c("epp_Total_OPP",
-                                          "epp_Total_Untreated",
-                                          "epp_IP_OPP"),
-                            midpoint = TRUE,
-                            ribbon = FALSE)

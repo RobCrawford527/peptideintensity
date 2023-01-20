@@ -57,15 +57,3 @@ peptide_intensity_distribution <- function(data,
   # return output list
   output
 }
-
-example_dist <- peptide_intensity_distribution(data = example,
-                                               names_col = "GENENAME",
-                                               exp_col = "experiment",
-                                               cond_col = "condition",
-                                               rep_col = "replicate",
-                                               seq_col = "Sequence",
-                                               val_col = "intensity",
-                                               start_col = "Start.position",
-                                               end_col = "End.position",
-                                               len_col = "protein_length",
-                                               sep = "/")

@@ -8,5 +8,3 @@ mean_peptide_intensity_distribution <- function(data){
   # return output data frame
   output
 }
-
-example_dist_mean <- mean_peptide_intensity_distribution(example_dist)
