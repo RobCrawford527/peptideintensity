@@ -36,18 +36,23 @@ peptide_intensity_distribution <- function(data,
   # separate into list by protein name
   data_2 <- list()
   for (i in unique(data_1[,"name"])){
-    data_1_filtered <- dplyr::filter(.data = data_1,
-                                     name == i)
-    for (j in unique(data_1_filtered[,"experiment"])){
-      data_2[[i]][[j]] <- dplyr::filter(.data = data_1_filtered,
-                                        experiment == j)
+    data_1a <- dplyr::filter(.data = data_1,
+                             name == i)
+    for (j in unique(data_1a[,"condition"])){
+      data_1b <- dplyr::filter(.data = data_1a,
+                               condition == j)
+      for (k in unique(data_1b[,"replicate"])){
+        data_2[[i]][[j]][[k]] <- dplyr::filter(.data = data_1b,
+                                               replicate == k)
+      }
     }
   }
 
   # calculate cumulative peptide intensity distributions
   output <- lapply(data_2,
                    function(X) lapply(X,
-                                      function(Y) int_dist_1(Y)))
+                                      function(Y) lapply(Y,
+                                                         function(Z) peptideintensity:::int_dist_1(Z))))
 
   # return output list
   output
