@@ -21,17 +21,34 @@ moment <- function(data,
                    val_col,
                    pos_col,
                    len_col,
-                   sep = "/"){
+                   sep = "/",
+                   anchor = "centre",
+                   normalise = TRUE){
 
   # change column names
   colnames(data)[colnames(data) == names_col] <- "name"
   colnames(data)[colnames(data) == exp_col] <- "experiment"
   colnames(data)[colnames(data) == val_col] <- "value"
 
-  # calculate position of peptide relative to centre of protein
+
+  # calculate position of peptide relative to the appropriate anchor point (N-terminus, C-terminus or centre)
+  if (anchor == "centre"){
+    data[,"position"] <- data[,pos_col] - (data[,len_col]/2)
+  } else if (anchor == "N"){
+    data[,"position"] <- data[,pos_col]
+  } else if (anchor == "C"){
+    data[,"position"] <- data[,len_col] - data[,pos_col]
+  } else {
+    stop("no anchor point defined")
+  }
+
+  # normalise position if appropriate
+  if (normalise == TRUE){
+    data[,"position"] <- data[,"position"] / data[,len_col]
+  }
+
   # calculate weighted intensity (intensity multipled by relative position)
-  data[,"relative_position"] <- (data[,pos_col] - (data[,len_col]/2)) / data[,len_col]
-  data[,"weight"] <- data[,"value"] * data[,"relative_position"]
+  data[,"weight"] <- data[,"value"] * data[,"position"]
 
   # unite name and experiment columns
   data <- tidyr::unite(data = data,
