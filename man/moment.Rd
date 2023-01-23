@@ -4,7 +4,17 @@
 \alias{moment}
 \title{Calculate Peptide Intensity Moments}
 \usage{
-moment(data, names_col, exp_col, val_col, pos_col, len_col, sep = "/")
+moment(
+  data,
+  names_col,
+  exp_col,
+  val_col,
+  pos_col,
+  len_col,
+  sep = "/",
+  anchor = "centre",
+  normalise = TRUE
+)
 }
 \arguments{
 \item{data}{A data frame containing peptide-level proteomics data.}
@@ -20,7 +30,13 @@ moment(data, names_col, exp_col, val_col, pos_col, len_col, sep = "/")
 \item{len_col}{Column containing protein length.}
 
 \item{sep}{Separating character. Must not be present in either protein names
-or experiment.}
+or experiment. Default = "/".}
+
+\item{anchor}{Must be set to "centre" (default), "N" or "C". Defines which
+position in the protein the moment is relative to.}
+
+\item{normalise}{Logical indicating whether the position should be
+normalised to the protein length (default = TRUE).}
 }
 \value{
 A data frame containing peptide intensity moments for each protein

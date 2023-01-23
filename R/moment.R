@@ -7,7 +7,11 @@
 #' @param pos_col Column containing peptide midpoint.
 #' @param len_col Column containing protein length.
 #' @param sep Separating character. Must not be present in either protein names
-#'     or experiment.
+#'     or experiment. Default = "/".
+#' @param anchor Must be set to "centre" (default), "N" or "C". Defines which
+#'     position in the protein the moment is relative to.
+#' @param normalise Logical indicating whether the position should be
+#'     normalised to the protein length (default = TRUE).
 #'
 #' @return A data frame containing peptide intensity moments for each protein
 #'     and sample.
