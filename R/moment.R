@@ -63,12 +63,13 @@ moment <- function(data,
                                      na.rm = TRUE))
   moment <- sapply(sums,
                    function(X) X["weight"] / X["value"])
+  names(moment) <- gsub(".weight",
+                        "",
+                        names(moment))
 
   # write moments and number of peptides into data frame
   # separate names and experiments
-  output <- data.frame(name_experiment = gsub(".weight",
-                                              "",
-                                              names(moment)),
+  output <- data.frame(name_experiment = names(moment),
                        moment = moment,
                        nonzero = nonzero)
   row.names(output) <- NULL
