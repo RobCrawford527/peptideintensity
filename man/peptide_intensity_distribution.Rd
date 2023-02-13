@@ -15,7 +15,8 @@ peptide_intensity_distribution(
   start_col,
   end_col,
   len_col,
-  sep = "/"
+  sep = "/",
+  threshold = 1
 )
 }
 \arguments{
@@ -41,6 +42,9 @@ peptide_intensity_distribution(
 
 \item{sep}{Separating character. Must not be present in either protein names
 or experiment.}
+
+\item{threshold}{Threshold for number of peptides. Peptide intensity
+distribution is not calculated if below threshold. Default is 1.}
 }
 \value{
 A multi-level list containing cumulative peptide intensity
