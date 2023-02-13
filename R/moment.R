@@ -34,7 +34,6 @@ moment <- function(data,
   colnames(data)[colnames(data) == exp_col] <- "experiment"
   colnames(data)[colnames(data) == val_col] <- "value"
 
-
   # calculate position of peptide relative to the appropriate anchor point (N-terminus, C-terminus or centre)
   if (anchor == "centre"){
     data[,"position"] <- data[,pos_col] - (data[,len_col]/2)

@@ -12,6 +12,8 @@
 #' @param len_col Column containing protein length.
 #' @param sep Separating character. Must not be present in either protein names
 #'     or experiment.
+#' @param threshold Threshold for number of peptides. Peptide intensity
+#'     distribution is not calculated if below threshold. Default is 1.
 #'
 #' @return A multi-level list containing cumulative peptide intensity
 #'     distributions (cumulative proportion of intensity observed against
@@ -31,7 +33,8 @@ peptide_intensity_distribution <- function(data,
                                            start_col,
                                            end_col,
                                            len_col,
-                                           sep = "/"){
+                                           sep = "/",
+                                           threshold = 1){
 
   # change column names
   colnames(data)[colnames(data) == names_col] <- "name"
@@ -65,8 +68,14 @@ peptide_intensity_distribution <- function(data,
       data_1b <- dplyr::filter(.data = data_1a,
                                condition == j)
       for (k in unique(data_1b[,"replicate"])){
-        data_2[[i]][[j]][[k]] <- dplyr::filter(.data = data_1b,
-                                               replicate == k)
+        data_1c <- dplyr::filter(.data = data_1b,
+                                 replicate == k)
+
+        # check if number of peptides exceeds threshold
+        # write into list if it does
+        if (nrow(data_1c) >= threshold){
+          data_2[[i]][[j]][[k]] <- data_1c
+        }
       }
     }
   }
