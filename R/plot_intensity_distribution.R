@@ -76,7 +76,8 @@ plot_intensity_distribution <- function(data,
 
     # set colours
     ggplot2::scale_color_manual(values = colours,
-                                breaks = breaks) +
+                                breaks = breaks,
+                                drop = FALSE) +
 
     # set plot and axis titles
     ggplot2::ggtitle(label = protein) +
@@ -119,7 +120,8 @@ plot_intensity_distribution <- function(data,
     plot <- plot +
       # add scale for fill
       ggplot2::scale_fill_manual(values = colours,
-                                 breaks = breaks)
+                                 breaks = breaks,
+                                 drop = FALSE)
   }
 
   # return plot
