@@ -24,7 +24,7 @@ wasserstein_test <- function(data,
                              method = "BH",
                              alpha = 0.01){
 
-  # create empty output data frame
+  # create empty output list
   # select appropriate data and perform wasserstein test
   # write into data frame
   output <- list()
@@ -34,20 +34,29 @@ wasserstein_test <- function(data,
     input <- data[[i]]
     reference <- input[[ref_condition]][[ref_replicate]]
 
-    for (j in names(input)[names(input) != ref_condition]){
-      # select sample condition
-      input_j <- input[[j]]
+    # check that there is a reference distribution
+    # if not, cannot perform test
+    if (!is.null(reference)){
+      for (j in names(input)[names(input) != ref_condition]){
+        # select sample condition
+        input_j <- input[[j]]
 
-      for (k in names(input_j)){
-        # select sample replicate
-        sample <- input_j[[k]]
+        for (k in names(input_j)){
+          # select sample replicate
+          sample <- input_j[[k]]
 
-        # perform wasserstein test
-        # write into data frame for comparison of interest
-        output[[j]] <- rbind.data.frame(output[[j]],
-                                        wass_test_dist(reference = reference,
-                                                       sample = sample,
-                                                       nboots = nboots))
+          # check that there is a sample distribution
+          # if not, cannot perform test
+          if (!is.null(sample)){
+            # perform wasserstein test
+            # write into data frame for comparison of interest
+            output[[j]] <- rbind.data.frame(output[[j]],
+                                            wass_test_dist(reference = reference,
+                                                           sample = sample,
+                                                           nboots = nboots,
+                                                           replicate = k))
+          }
+        }
       }
     }
   }
@@ -57,7 +66,7 @@ wasserstein_test <- function(data,
   # separate comparisons to correct each individually
   corrected <- lapply(output,
                       function(X) dplyr::mutate(X,
-                                                adj_pval = stats::p.adjust(result$pval,
+                                                adj_pval = stats::p.adjust(X$pval,
                                                                            method = method)))
 
   # return output list

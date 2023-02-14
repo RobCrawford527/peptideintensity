@@ -5,6 +5,7 @@
 #' @param sample A data frame containing the sample cumulative peptide
 #'     intensity distribution to test.
 #' @param nboots The number of bootstrap iterations to perform.
+#' @param replicate The name of the replicate used.
 #'
 #' @return A data frame containing the output of the Wasserstein test for the
 #'     comparison of interest.
@@ -13,7 +14,8 @@
 #'
 wass_test_dist <- function(reference,
                            sample,
-                           nboots){
+                           nboots,
+                           replicate){
 
   # create combined data frame
   combined <- data.frame(residue = reference[["distribution"]]$residue,
@@ -41,6 +43,7 @@ wass_test_dist <- function(reference,
                        comparison = paste(sample$experiment,
                                           reference$experiment,
                                           sep = "_vs_"),
+                       replicate = replicate,
                        difference = result[1],
                        p_val = result[2],
                        direction = direction,
