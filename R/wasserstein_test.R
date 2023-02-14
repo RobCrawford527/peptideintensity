@@ -6,10 +6,10 @@
 #' @param ref_condition The condition to use as reference.
 #' @param ref_replicate The replicate to use as reference (default = "mean").
 #' @param nboots The number of bootstrap iterations to perform.
-#' @param correction Logical indicating whether or not to correct the
-#'     p-values (using the BH procedure).
+#' @param method P-value correction method to use in p.adjust. Choose from
+#'     "holm", "hochberg", "hommel", "bonferroni", "BH" (default), "BY", "fdr",
+#'     or "none".
 #' @param alpha The significance level to use.
-#' @param sep Separating character. Must not be present in experiment names.
 #'
 #' @return A list of data frames containing the Wasserstein test results for
 #'     each comparison.
@@ -21,14 +21,13 @@ wasserstein_test <- function(data,
                              ref_condition,
                              ref_replicate = "mean",
                              nboots = 5000,
-                             correction = TRUE,
-                             alpha = 0.01,
-                             sep = "/"){
+                             method = "BH",
+                             alpha = 0.01){
 
   # create empty output data frame
   # select appropriate data and perform wasserstein test
   # write into data frame
-  output <- data.frame()
+  output <- list()
   for (i in names(data)){
     # select protein
     # define reference condition
@@ -44,31 +43,22 @@ wasserstein_test <- function(data,
         sample <- input_j[[k]]
 
         # perform wasserstein test
-        # write into data frame
-        output <- rbind.data.frame(output,
-                                   wass_test_dist(reference = reference,
-                                                  sample = sample,
-                                                  nboots = nboots,
-                                                  sep = sep))
+        # write into data frame for comparison of interest
+        output[[j]] <- rbind.data.frame(output[[j]],
+                                        wass_test_dist(reference = reference,
+                                                       sample = sample,
+                                                       nboots = nboots))
       }
     }
   }
 
-  # perform p-value correction using BH procedure, if appropriate
+  # perform p-value correction using BH procedure
   # create empty output list
   # separate comparisons to correct each individually
-  corrected <- list()
-  for (c in unique(output[,"comparison"])){
-    # select comparison of interest
-    output_c <- dplyr::filter(.data = output,
-                              comparison == c)
-
-    # perform BH procedure (or not, if correction = FALSE)
-    # write output into list
-    corrected[[c]] <- bh_correction(input = output_c,
-                                    correction = correction,
-                                    alpha = alpha)
-  }
+  corrected <- lapply(output,
+                      function(X) dplyr::mutate(X,
+                                                adj_pval = stats::p.adjust(result$pval,
+                                                                           method = method)))
 
   # return output list
   corrected

@@ -28,11 +28,16 @@ plot_midpoint <- function(input,
     input_e[,"midpoint"] <- abs(input_e[,"cumulative"] - 0.5)
     minimum <- min(input_e[,"midpoint"])
 
-    # select row corresponding to minimum distance
+    # select row(s) corresponding to minimum distance from midpoint
+    # if more than one, select only the first
+    input_m <- dplyr::filter(.data = input_e,
+                             midpoint == minimum)
+    input_m <- dplyr::filter(.data = input_m,
+                             distance == min(input_m[,"distance"]))
+
     # combine with other midpoints
     midpoint <- rbind.data.frame(midpoint,
-                                 dplyr::filter(.data = input_e,
-                                               midpoint == minimum))
+                                 input_m)
   }
 
   # add elements to existing plot

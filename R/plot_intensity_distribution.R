@@ -38,7 +38,7 @@ plot_intensity_distribution <- function(data,
       input_ij <- input_i[[j]][["distribution"]]
 
       # add experiment, condition and replicate information
-      input_ij[,"experiment"] <- paste(i, j, sep = "_")
+      input_ij[,"experiment"] <- paste(i, j, sep = "/")
       input_ij[,"condition"] <- i
       input_ij[,"replicate"] <- j
 
