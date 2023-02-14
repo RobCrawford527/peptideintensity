@@ -51,7 +51,7 @@ plot_intensity_distribution <- function(data,
   # define colour options
   # define breaks if breaks = NULL
   # define shape options
-  colours <- viridis::viridis(n = length(unique(input_df[,"condition"])),
+  colours <- viridis::viridis(n = length(condition),
                               begin = 0.25,
                               end = 0.85,
                               option = "inferno")
