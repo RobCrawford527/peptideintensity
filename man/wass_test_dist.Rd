@@ -4,7 +4,7 @@
 \alias{wass_test_dist}
 \title{Compare Peptide Intensity Distributions Using The Wasserstein Test}
 \usage{
-wass_test_dist(reference, sample, nboots, sep)
+wass_test_dist(reference, sample, nboots)
 }
 \arguments{
 \item{reference}{A data frame containing the reference cumulative peptide
@@ -14,8 +14,6 @@ intensity distribution.}
 intensity distribution to test.}
 
 \item{nboots}{The number of bootstrap iterations to perform.}
-
-\item{sep}{Separating character. Must not be present in experiment names.}
 }
 \value{
 A data frame containing the output of the Wasserstein test for the

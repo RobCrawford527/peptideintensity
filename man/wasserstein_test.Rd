@@ -9,9 +9,8 @@ wasserstein_test(
   ref_condition,
   ref_replicate = "mean",
   nboots = 5000,
-  correction = TRUE,
-  alpha = 0.01,
-  sep = "/"
+  method = "BH",
+  alpha = 0.01
 )
 }
 \arguments{
@@ -25,12 +24,11 @@ These may be individual replicates or means.}
 
 \item{nboots}{The number of bootstrap iterations to perform.}
 
-\item{correction}{Logical indicating whether or not to correct the
-p-values (using the BH procedure).}
+\item{method}{P-value correction method to use in p.adjust. Choose from
+"holm", "hochberg", "hommel", "bonferroni", "BH" (default), "BY", "fdr",
+or "none".}
 
 \item{alpha}{The significance level to use.}
-
-\item{sep}{Separating character. Must not be present in experiment names.}
 }
 \value{
 A list of data frames containing the Wasserstein test results for
