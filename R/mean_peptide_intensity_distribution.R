@@ -19,11 +19,12 @@ mean_peptide_intensity_distribution <- function(data){
                                       function(Y) mean_int_dist_1(Y)))
 
   # discard null elements of list
+  # first remove conditions without mean
+  # then remove proteins without any condition means
   output <- lapply(output,
-                   function(X) lapply(X,
-                                      function(Y) purrr::discard(Y,
-                                                                 is.null)))
+                   function(X) purrr::discard(X, is.null))
+  output <- purrr::discard(output, is.null)
 
-  # return output data frame
+  # return output list
   output
 }
