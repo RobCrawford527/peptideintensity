@@ -64,12 +64,11 @@ wasserstein_test <- function(data,
   # perform p-value correction using BH procedure
   # create empty output list
   # separate comparisons to correct each individually
-  #corrected <- lapply(output,
-  #                    function(X) dplyr::mutate(X,
-  #                                              adj_pval = stats::p.adjust(X$pval,
-  #                                                                         method = method)))
+  corrected <- lapply(output,
+                      function(X) dplyr::mutate(X,
+                                                adj_pval = stats::p.adjust(X$pval,
+                                                                           method = method)))
 
   # return output list
-  #corrected
-  output
+  corrected
 }
