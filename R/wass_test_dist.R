@@ -45,7 +45,7 @@ wass_test_dist <- function(reference,
                                           sep = "_vs_"),
                        replicate = replicate,
                        difference = result[1],
-                       p_val = result[2],
+                       pval = result[2],
                        direction = direction,
                        adj_difference = result[1] * direction)
 
