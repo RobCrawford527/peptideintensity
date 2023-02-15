@@ -18,6 +18,12 @@ mean_peptide_intensity_distribution <- function(data){
                    function(X) lapply(X,
                                       function(Y) mean_int_dist_1(Y)))
 
+  # discard null elements of list
+  output <- lapply(output,
+                   function(X) lapply(X,
+                                      function(Y) purrr::discard(Y,
+                                                                 is.null)))
+
   # return output data frame
   output
 }

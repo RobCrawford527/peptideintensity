@@ -18,6 +18,7 @@ Imports:
     dplyr,
     ggplot2,
     matrixStats,
+    purrr,
     tidyr,
     twosamples,
     viridis

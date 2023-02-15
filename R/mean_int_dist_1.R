@@ -31,8 +31,11 @@ mean_int_dist_1 <- function(input){
                              coverage = sapply(input,
                                                function(X) X[["coverage"]]),
                              distribution = distribution)
-
-    # return output list
-    output
+  } else {
+    # set output to NULL
+    output <- NULL
   }
+
+  # return output list
+  output
 }
