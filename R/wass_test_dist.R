@@ -40,8 +40,8 @@ wass_test_dist <- function(reference,
 
   # create output data frame
   output <- data.frame(protein = reference$name,
-                       comparison = paste(sample$experiment,
-                                          reference$experiment,
+                       comparison = paste(sample$condition,
+                                          reference$condition,
                                           sep = "_vs_"),
                        replicate = replicate,
                        difference = result[1],
