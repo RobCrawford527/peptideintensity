@@ -34,9 +34,11 @@ wass_test_dist <- function(reference,
   # ... negative represents N-shift
   # ... 0 represents identical distributions
   # ... positive represents C-shift
+  # determine sign of direction, to be used to calculate adjusted difference
   direction <- ifelse(sum(abs(combined[,"reference"] - combined[,"sample"])) == 0,
                       0,
                       sum(combined[,"reference"] - combined[,"sample"]) / sum(abs(combined[,"reference"] - combined[,"sample"])))
+  direction_sign <- ifelse(direction >= 0, 1, -1)
 
   # create output data frame
   output <- data.frame(protein = reference$name,
@@ -47,7 +49,7 @@ wass_test_dist <- function(reference,
                        difference = result[1],
                        pval = result[2],
                        direction = direction,
-                       adj_difference = result[1] * direction)
+                       adj_difference = result[1] * direction_sign)
 
   # return output data frame
   output
