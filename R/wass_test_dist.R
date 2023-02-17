@@ -49,7 +49,8 @@ wass_test_dist <- function(reference,
                        difference = result[1],
                        pval = result[2],
                        direction = direction,
-                       adj_difference = result[1] * direction_sign)
+                       signed_difference = result[1] * direction_sign,
+                       adj_difference = result[1] * direction)
 
   # return output data frame
   output
