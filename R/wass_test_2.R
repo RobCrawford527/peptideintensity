@@ -84,8 +84,8 @@ wass_test_2 <- function(reference,
     }
 
     # create reference and sample data frames for permutation
-    reference_df_p <- sapply(permutation_samples[ref_exp], function(x) x)
-    sample_df_p <- sapply(permutation_samples[sam_exp], function(x) x)
+    reference_df_p <- as.data.frame(sapply(permutation_samples[ref_exp], function(x) x))
+    sample_df_p <- as.data.frame(sapply(permutation_samples[sam_exp], function(x) x))
 
     # determine mean in each position for reference and sample for permutation
     mean_ref_p <- rowMeans(reference_df_p)
