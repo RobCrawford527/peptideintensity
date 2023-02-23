@@ -4,7 +4,8 @@
 #' @param sample A list containing data for the sample condition.
 #' @param nboots The number of bootstrap iterations to perform.
 #' @param protein The protein being tested.
-#' @param ref_condition The condition to use as reference.
+#' @param ref_condition The reference condition.
+#' @param sam_condition The sample condition being tested.
 #'
 #' @return A data frame containing the output of the Wasserstein test for the
 #'     comparison of interest.

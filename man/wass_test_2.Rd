@@ -4,7 +4,14 @@
 \alias{wass_test_2}
 \title{Compare Peptide Intensity Distributions Using The Wasserstein Test}
 \usage{
-wass_test_2(reference, sample, nboots = 5000, protein, ref_condition)
+wass_test_2(
+  reference,
+  sample,
+  nboots = 5000,
+  protein,
+  ref_condition,
+  sam_condition
+)
 }
 \arguments{
 \item{reference}{A list containing data for the reference condition.}
@@ -15,7 +22,9 @@ wass_test_2(reference, sample, nboots = 5000, protein, ref_condition)
 
 \item{protein}{The protein being tested.}
 
-\item{ref_condition}{The condition to use as reference.}
+\item{ref_condition}{The reference condition.}
+
+\item{sam_condition}{The sample condition being tested.}
 }
 \value{
 A data frame containing the output of the Wasserstein test for the
