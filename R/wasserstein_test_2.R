@@ -45,7 +45,9 @@ wasserstein_test_2 <- function(data,
           output[[s]] <- rbind.data.frame(output[[s]],
                                           wass_test_2(reference = reference,
                                                       sample = sample,
-                                                      nboots = nboots))
+                                                      nboots = nboots,
+                                                      protein = p,
+                                                      ref_condition = ref_condition))
         }
       }
     }

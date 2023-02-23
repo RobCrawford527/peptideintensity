@@ -3,6 +3,8 @@
 #' @param reference A list containing data for the reference condition.
 #' @param sample A list containing data for the sample condition.
 #' @param nboots The number of bootstrap iterations to perform.
+#' @param protein The protein being tested.
+#' @param ref_condition The condition to use as reference.
 #'
 #' @return A data frame containing the output of the Wasserstein test for the
 #'     comparison of interest.
@@ -12,17 +14,17 @@
 #'
 wass_test_2 <- function(reference,
                         sample,
-                        nboots){
+                        nboots = 5000,
+                        protein,
+                        ref_condition){
 
   # define protein, reference condition and sample condition
-  protein <- reference[1][["name"]]
-  ref_condition <- reference[1][["condition"]]
   sam_condition <- sample[1][["condition"]]
 
   # create experiment list for reference and sample
   # create combined experiment list
-  ref_exp <- unlist(lapply(reference,function(x) x[["experiment"]]))
-  sam_exp <- unlist(lapply(sample,function(x) x[["experiment"]]))
+  ref_exp <- unlist(lapply(reference, function(x) x[["experiment"]]))
+  sam_exp <- unlist(lapply(sample, function(x) x[["experiment"]]))
   names(ref_exp) <- NULL
   names(sam_exp) <- NULL
   combined_exp <- c(sam_exp, ref_exp)
