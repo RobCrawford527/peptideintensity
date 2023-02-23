@@ -97,7 +97,7 @@ wass_test_2 <- function(reference,
 
     # compare test statistic for permutation with true test statistic
     # if equal or greater, increment larger by one
-    if (test_stat_p >= true_test_stat){
+    if (test_stat_p >= true_test_stat["abs_diff"]){
       larger <- larger + 1
     }
 
