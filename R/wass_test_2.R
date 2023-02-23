@@ -16,10 +16,8 @@ wass_test_2 <- function(reference,
                         sample,
                         nboots = 5000,
                         protein,
-                        ref_condition){
-
-  # define protein, reference condition and sample condition
-  sam_condition <- sample[1][["condition"]]
+                        ref_condition,
+                        sam_condition){
 
   # create experiment list for reference and sample
   # create combined experiment list

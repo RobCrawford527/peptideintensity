@@ -47,7 +47,8 @@ wasserstein_test_2 <- function(data,
                                                       sample = sample,
                                                       nboots = nboots,
                                                       protein = p,
-                                                      ref_condition = ref_condition))
+                                                      ref_condition = ref_condition,
+                                                      sam_condition = s))
         }
       }
     }
