@@ -72,10 +72,10 @@ wass_test_2 <- function(reference,
 
     # create list of individual "samples" from permutation
     permutation_samples <- list()
-    for (i in 1:length(combined_samples)){
+    for (i in 1:length(combined_exp)){
 
       # select samples one-by-one
-      j <- combined_samples[i]
+      j <- combined_exp[i]
 
       # select appropriate indices from vector
       # order new sample
