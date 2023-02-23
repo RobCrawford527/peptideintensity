@@ -79,8 +79,8 @@ wass_test_2 <- function(reference,
 
       # select appropriate indices from vector
       # order new sample
-      permutation_samples[[s]] <- permutation[(1 + len*(i-1)):(len + len*(i-1))]
-      permutation_samples[[s]] <- permutation_samples[[j]][order(permutation_samples[[j]])]
+      permutation_samples[[j]] <- permutation[(1 + len*(i-1)):(len + len*(i-1))]
+      permutation_samples[[j]] <- permutation_samples[[j]][order(permutation_samples[[j]])]
     }
 
     # create reference and sample data frames for permutation
