@@ -22,9 +22,9 @@ barcode_plot <- function(data,
                          comparison,
                          comparisons = NULL,
                          diff,
-                         start_position,
-                         end_position,
-                         protein_length,
+                         start,
+                         end,
+                         length,
                          colour){
 
   # define colours to use in plot
@@ -38,16 +38,16 @@ barcode_plot <- function(data,
   # filter data to keep only proteins and comparisons of interest
   # remove peptides with NA values for diff
   if (is.null(comparisons)){
-    comparisons <- unique(data[,comparison])
+    comparisons <- unique(data[[comparison]])
   }
   data <- dplyr::filter(data,
-                        {{ protein_id }} %in% proteins & !is.na({{ diff }}) & {{ comparison }} %in% comparisons)
+                        {{ protein_id }} %in% proteins & !is.na( {{ diff }} ) & {{ comparison }} %in% comparisons)
 
   # create plot
   plot <- ggplot2::ggplot(data,
-                          mapping = ggplot2::aes(fill = {{ colour }})) +
-    ggplot2::geom_rect(mapping = ggplot2::aes(xmin = ({{ start_position }} - 1) / {{ protein_length }} * 100,
-                                              xmax = {{ end_position }} / {{ protein_length }} * 100,
+                          mapping = ggplot2::aes(fill = {{ colour }} )) +
+    ggplot2::geom_rect(mapping = ggplot2::aes(xmin = ( {{ start }} - 1) / {{ length }} * 100,
+                                              xmax = {{ end }} / {{ length }} * 100,
                                               ymin = -15,
                                               ymax = 15),
                        alpha = 0.8) +
@@ -59,7 +59,8 @@ barcode_plot <- function(data,
                                 breaks = NULL) +
     ggplot2::coord_equal(ratio = 1) +
     ggplot2::scale_fill_manual(values = colours) +
-    ggplot2::facet_grid({{ comparison }} ~ {{ protein_id }}) +
+    ggplot2::facet_grid(rows = dplyr::vars( {{ comparison }} ),
+                        cols = dplyr::vars( {{ protein_id }} )) +
     ggplot2::theme_classic() +
     ggplot2::theme(strip.background = ggplot2::element_blank(),
                    panel.background = ggplot2::element_blank(),
