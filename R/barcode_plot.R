@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @examples
-#' 
+#'
 barcode_plot <- function(data,
                          protein_id,
                          proteins,
@@ -26,37 +26,28 @@ barcode_plot <- function(data,
                          end_position,
                          protein_length,
                          colour){
-  
+
   # define colours to use in plot
-  colours <- viridis::viridis(n = 2, 
+  colours <- viridis::viridis(n = 2,
                               begin = 0.15,
                               end = 0.85,
                               direction = -1,
                               option = "inferno")
   colours <- c(colours[1], "grey75", colours[2])
-  
-  # change column names
-  colnames(data)[colnames(data) == protein_id] <- "id"
-  colnames(data)[colnames(data) == comparison] <- "comparison"
-  colnames(data)[colnames(data) == diff] <- "diff"
-  colnames(data)[colnames(data) == start_position] <- "start"
-  colnames(data)[colnames(data) == end_position] <- "end"
-  colnames(data)[colnames(data) == protein_length] <- "length"
-  colnames(data)[colnames(data) == colour] <- "colour"
-  
+
   # filter data to keep only proteins and comparisons of interest
   # remove peptides with NA values for diff
   if (is.null(comparisons)){
-    comparisons <- unique(data[,"comparison"])
+    comparisons <- unique(data[,comparison])
   }
   data <- dplyr::filter(data,
-                        id %in% proteins & !is.na(diff) & comparison %in% comparisons)
-  
+                        {{ protein_id }} %in% proteins & !is.na({{ diff }}) & {{ comparison }} %in% comparisons)
+
   # create plot
   plot <- ggplot2::ggplot(data,
-                          mapping = ggplot2::aes(fill = colour)) +
-    ggplot2::geom_rect(mapping = ggplot2::aes(xmin = (start - 1) / length * 100,
-                                              xmax = end / length * 100,
+                          mapping = ggplot2::aes(fill = {{ colour }})) +
+    ggplot2::geom_rect(mapping = ggplot2::aes(xmin = ({{ start_position }} - 1) / {{ protein_length }} * 100,
+                                              xmax = {{ end_position }} / {{ protein_length }} * 100,
                                               ymin = -15,
                                               ymax = 15),
                        alpha = 0.8) +
@@ -68,13 +59,13 @@ barcode_plot <- function(data,
                                 breaks = NULL) +
     ggplot2::coord_equal(ratio = 1) +
     ggplot2::scale_fill_manual(values = colours) +
-    ggplot2::facet_grid(comparison ~ id) +
+    ggplot2::facet_grid({{ comparison }} ~ {{ protein_id }}) +
     ggplot2::theme_classic() +
     ggplot2::theme(strip.background = ggplot2::element_blank(),
                    panel.background = ggplot2::element_blank(),
                    panel.border = ggplot2::element_rect(fill = NA),
                    legend.position = "bottom")
-  
+
   # return plot
   plot
 }
