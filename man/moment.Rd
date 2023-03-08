@@ -13,7 +13,8 @@ moment(
   length,
   sep = "/",
   anchor = "centre",
-  normalise = TRUE
+  normalise = TRUE,
+  keep = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ position in the protein the moment is relative to.}
 
 \item{normalise}{Logical indicating whether the position should be
 normalised to the protein length (default = TRUE).}
+
+\item{keep}{Additional columns to keep.}
 }
 \value{
 A data frame containing peptide intensity moments for each protein

@@ -12,6 +12,7 @@
 #'     position in the protein the moment is relative to.
 #' @param normalise Logical indicating whether the position should be
 #'     normalised to the protein length (default = TRUE).
+#' @param keep Additional columns to keep.
 #'
 #' @return A data frame containing peptide intensity moments for each protein
 #'     and sample.
@@ -27,7 +28,8 @@ moment <- function(data,
                    length,
                    sep = "/",
                    anchor = "centre",
-                   normalise = TRUE){
+                   normalise = TRUE,
+                   keep = NULL){
 
   # calculate position of peptide relative to the appropriate anchor point (N-terminus, C-terminus or centre)
   if (anchor == "centre"){
@@ -57,12 +59,11 @@ moment <- function(data,
 
   # count number of non-zero peptides
   # calculate protein moment
-  # select only rows and columns of interest
   output <- dplyr::summarise(output,
                              n_peptides = dplyr::n(),
                              moment = sum(weight, na.rm = TRUE) / sum( {{ value }}, na.rm = TRUE))
   output <- dplyr::select(output,
-                          {{ protein_id }}, {{ experiment }}, n_peptides, moment)
+                          {{ protein_id }}, {{ experiment }}, n_peptides, moment, {{ keep }})
   output <- dplyr::distinct(output)
 
   # return output data frame
