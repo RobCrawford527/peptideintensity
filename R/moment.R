@@ -59,7 +59,7 @@ moment <- function(data,
   # calculate protein moment
   # select only rows and columns of interest
   output <- dplyr::summarise(output,
-                             n_peptides = n(),
+                             n_peptides = dplyr::n(),
                              moment = sum(weight, na.rm = TRUE) / sum( {{ value }}, na.rm = TRUE))
   output <- dplyr::select(output,
                           {{ protein_id }}, {{ experiment }}, n_peptides, moment)
