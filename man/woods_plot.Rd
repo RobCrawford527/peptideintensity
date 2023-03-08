@@ -11,11 +11,11 @@ woods_plot(
   comparison,
   comparisons = NULL,
   diff,
-  start_position,
-  end_position,
-  protein_length,
-  lower_limit,
-  upper_limit,
+  start,
+  end,
+  length,
+  lower,
+  upper,
   colour
 )
 }
@@ -32,15 +32,15 @@ woods_plot(
 
 \item{diff}{Column containing differential abundance data.}
 
-\item{start_position}{Column containing peptide start positions.}
+\item{start}{Column containing peptide start positions.}
 
-\item{end_position}{Column containing peptide end positions.}
+\item{end}{Column containing peptide end positions.}
 
-\item{protein_length}{Column containing protein lengths.}
+\item{length}{Column containing protein lengths.}
 
-\item{lower_limit}{Column indicating lower limit of 95\% CI.}
+\item{lower}{Column indicating lower limit of 95\% CI.}
 
-\item{upper_limit}{Column indicating lower limit of 95\% CI.}
+\item{upper}{Column indicating lower limit of 95\% CI.}
 
 \item{colour}{Column containing colour indications. Should have three levels: "down", "unchanged" and "up".}
 }

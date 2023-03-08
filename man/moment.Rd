@@ -6,11 +6,11 @@
 \usage{
 moment(
   data,
-  names_col,
-  exp_col,
-  val_col,
-  pos_col,
-  len_col,
+  protein_id,
+  experiment,
+  value,
+  position,
+  length,
   sep = "/",
   anchor = "centre",
   normalise = TRUE
@@ -19,15 +19,15 @@ moment(
 \arguments{
 \item{data}{A data frame containing peptide-level proteomics data.}
 
-\item{names_col}{Column containing protein names.}
+\item{protein_id}{Column containing protein names.}
 
-\item{exp_col}{Column containing experiment.}
+\item{experiment}{Column containing experiment.}
 
-\item{val_col}{Column containing peptide intensity data.}
+\item{value}{Column containing peptide intensity data.}
 
-\item{pos_col}{Column containing peptide midpoint.}
+\item{position}{Column containing peptide midpoint.}
 
-\item{len_col}{Column containing protein length.}
+\item{length}{Column containing protein length.}
 
 \item{sep}{Separating character. Must not be present in either protein names
 or experiment. Default = "/".}

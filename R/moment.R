@@ -1,11 +1,11 @@
 #' Calculate Peptide Intensity Moments
 #'
 #' @param data A data frame containing peptide-level proteomics data.
-#' @param names_col Column containing protein names.
-#' @param exp_col Column containing experiment.
-#' @param val_col Column containing peptide intensity data.
-#' @param pos_col Column containing peptide midpoint.
-#' @param len_col Column containing protein length.
+#' @param protein_id Column containing protein names.
+#' @param experiment Column containing experiment.
+#' @param value Column containing peptide intensity data.
+#' @param position Column containing peptide midpoint.
+#' @param length Column containing protein length.
 #' @param sep Separating character. Must not be present in either protein names
 #'     or experiment. Default = "/".
 #' @param anchor Must be set to "centre" (default), "N" or "C". Defines which
@@ -20,88 +20,50 @@
 #' @examples
 #'
 moment <- function(data,
-                   names_col,
-                   exp_col,
-                   val_col,
-                   pos_col,
-                   len_col,
+                   protein_id,
+                   experiment,
+                   value,
+                   position,
+                   length,
                    sep = "/",
                    anchor = "centre",
                    normalise = TRUE){
 
-  # change column names
-  colnames(data)[colnames(data) == names_col] <- "name"
-  colnames(data)[colnames(data) == exp_col] <- "experiment"
-  colnames(data)[colnames(data) == val_col] <- "value"
-
   # calculate position of peptide relative to the appropriate anchor point (N-terminus, C-terminus or centre)
   if (anchor == "centre"){
-    data[,"position"] <- data[,pos_col] - (data[,len_col]/2)
+    data <- dplyr::mutate(data, relative_position = {{ position }} - ( {{ length }} / 2 ))
   } else if (anchor == "N"){
-    data[,"position"] <- data[,pos_col]
+    data <- dplyr::mutate(data, relative_position = {{ position }})
   } else if (anchor == "C"){
-    data[,"position"] <- data[,len_col] - data[,pos_col]
+    data <- dplyr::mutate(data, relative_position = {{ length }} - {{ position }})
   } else {
-    stop("no anchor point defined")
+    stop("no anchor point defined: must be 'centre', 'N' or 'C'")
   }
 
   # normalise position if appropriate
   if (normalise == TRUE){
-    data[,"position"] <- data[,"position"] / data[,len_col]
+    data <- dplyr::mutate(data, relative_position = relative_position / {{ length }})
   }
 
   # calculate weighted intensity (intensity multipled by relative position)
-  data[,"weight"] <- data[,"value"] * data[,"position"]
+  data <- dplyr::mutate(data, weight = {{ value }} * relative_position)
 
-  # unite name and experiment columns
-  data <- tidyr::unite(data = data,
-                       col = "name_experiment",
-                       name,
-                       experiment,
-                       sep = sep)
+  # keep only rows of interest
+  # group by name and experiment
+  output <- dplyr::filter(data,
+                          {{ value }} != 0)
+  output <- dplyr::group_by(output,
+                            {{ protein_id }}, {{ experiment }})
 
-  # keep only rows and columns of interest
-  data_1 <- dplyr::filter(.data = data[,c("name_experiment",
-                                          "value",
-                                          "weight")],
-                          value != 0)
-
-  # separate into list, one item for each name/experiment combination
-  data_2 <- list()
-  for (i in unique(data_1[,"name_experiment"])){
-    data_2[[i]] <- dplyr::filter(.data = data_1,
-                                 name_experiment == i)
-  }
-
-  # calculate numbers of non-zero peptides
-  # calculate raw and weighted intensity sums
-  # calculate relative moments (weighted intensity sum / raw intensity sum)
-  nonzero <- sapply(data_2,
-                    function(X) nrow(X))
-  sums <- lapply(data_2,
-                 function(X) colSums(X[,c("value", "weight")],
-                                     na.rm = TRUE))
-  moment <- sapply(sums,
-                   function(X) X["weight"] / X["value"])
-  names(moment) <- gsub(".weight",
-                        "",
-                        names(moment))
-
-  # write moments and number of peptides into data frame
-  # separate names and experiments
-  output <- data.frame(name_experiment = names(moment),
-                       moment = moment,
-                       nonzero = nonzero)
-  row.names(output) <- NULL
-  output <- tidyr::separate(data = output,
-                            col = name_experiment,
-                            into = c("name", "experiment"),
-                            sep = sep)
-
-  # revert column names
-  colnames(output)[colnames(output) == "name"] <- names_col
-  colnames(output)[colnames(output) == "experiment"] <- exp_col
-  colnames(output)[colnames(output) == "value"] <- val_col
+  # count number of non-zero peptides
+  # calculate protein moment
+  # select only rows and columns of interest
+  output <- dplyr::summarise(output,
+                             n_peptides = n(),
+                             moment = sum(weight, na.rm = TRUE) / sum( {{ value }}, na.rm = TRUE))
+  output <- dplyr::select(output,
+                          {{ protein_id }}, {{ experiment }}, n_peptides, moment)
+  output <- dplyr::distinct(output)
 
   # return output data frame
   output

@@ -6,9 +6,9 @@
 #' @param comparison Column containing the comparison.
 #' @param comparisons Comparison(s) to plot. All by default.
 #' @param diff Column containing differential abundance data.
-#' @param start_position Column containing peptide start positions.
-#' @param end_position Column containing peptide end positions.
-#' @param protein_length Column containing protein lengths.
+#' @param start Column containing peptide start positions.
+#' @param end Column containing peptide end positions.
+#' @param length Column containing protein lengths.
 #' @param colour Column containing colour indications. Should have three levels: "down", "unchanged" and "up".
 #'
 #' @return Barcode plots for the selected proteins and comparisons, indicating peptides that have changed in abundance between samples.

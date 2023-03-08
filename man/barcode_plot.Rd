@@ -11,9 +11,9 @@ barcode_plot(
   comparison,
   comparisons = NULL,
   diff,
-  start_position,
-  end_position,
-  protein_length,
+  start,
+  end,
+  length,
   colour
 )
 }
@@ -30,11 +30,11 @@ barcode_plot(
 
 \item{diff}{Column containing differential abundance data.}
 
-\item{start_position}{Column containing peptide start positions.}
+\item{start}{Column containing peptide start positions.}
 
-\item{end_position}{Column containing peptide end positions.}
+\item{end}{Column containing peptide end positions.}
 
-\item{protein_length}{Column containing protein lengths.}
+\item{length}{Column containing protein lengths.}
 
 \item{colour}{Column containing colour indications. Should have three levels: "down", "unchanged" and "up".}
 }
