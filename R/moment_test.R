@@ -1,3 +1,17 @@
+#' Statistical testing of protein moments
+#'
+#' @param moment_data Data frame containing moments (for individual replicates)
+#' @param peptide_data Data frame containing all peptides
+#' @param proteins Vector of protein(s) to analyse (default is all proteins in data)
+#' @param test_sample Sample to test
+#' @param reference_sample Sample to use as reference
+#' @param replicate_threshold Number of replicates required
+#' @param peptide_threshold Number of peptides required
+#' @param iterations Number of iterations of simulation to perform
+#'
+#' @return Data frame containing test results
+#' @export
+#'
 moment_test <- function(moment_data,
                         peptide_data,
                         proteins = NULL,

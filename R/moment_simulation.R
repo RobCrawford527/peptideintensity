@@ -1,3 +1,11 @@
+#' Simulate protein moments by sampling peptides
+#'
+#' @param data Peptide data to use for simulations
+#' @param number_of_peptides Number of peptides to use for simulations
+#' @param iterations Number of iterations to perform
+#'
+#' @return A vector of simulated moments (mean value across all of the )
+#'
 moment_simulation <- function(data,
                               number_of_peptides,
                               iterations = 100){

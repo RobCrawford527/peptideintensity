@@ -3,6 +3,7 @@
 export(barcode_plot)
 export(mean_peptide_intensity_distribution)
 export(moment)
+export(moment_test)
 export(peptide_intensity_distribution)
 export(plot_intensity_distribution)
 export(wass_stat_extended)
