@@ -44,9 +44,17 @@ barcode_plot <- function(data,
                         {{ protein_id }} %in% proteins & !is.na( {{ diff }} ) & {{ comparison }} %in% comparisons)
 
   # create plot
+  # layer changed peptides above unchanged ones
   plot <- ggplot2::ggplot(data,
                           mapping = ggplot2::aes(fill = {{ colour }} )) +
-    ggplot2::geom_rect(mapping = ggplot2::aes(xmin = ( {{ start }} - 1) / {{ length }} * 100,
+    ggplot2::geom_rect(data = dplyr::filter(data, {{ colour }} == "unchanged"),
+                       mapping = ggplot2::aes(xmin = ( {{ start }} - 1) / {{ length }} * 100,
+                                              xmax = {{ end }} / {{ length }} * 100,
+                                              ymin = -15,
+                                              ymax = 15),
+                       alpha = 0.8) +
+    ggplot2::geom_rect(data = dplyr::filter(data, {{ colour }} != "unchanged"),
+                       mapping = ggplot2::aes(xmin = ( {{ start }} - 1) / {{ length }} * 100,
                                               xmax = {{ end }} / {{ length }} * 100,
                                               ymin = -15,
                                               ymax = 15),
